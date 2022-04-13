@@ -52,10 +52,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        gsm.keyPressed(e.getKeyCode());
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        gsm.keyReleased(e.getKeyCode());
     }
 
     @Override
@@ -73,6 +75,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             update();
             draw();
             drawToScreen();
+
+            elapsed = System.nanoTime() - start;
+            wait = targetTime - elapsed / 1000000;
+            if(wait < 0)
+                wait = 5; // Evitando excessao argumento negativo passado ao sleep Illegal...
+            try {
+                Thread.sleep(wait);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
