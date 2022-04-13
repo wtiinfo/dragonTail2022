@@ -30,6 +30,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         requestFocus();
     }
 
+    public void addNotify() {
+        super.addNotify();
+        if(thread == null) {
+            thread = new Thread(this);
+            addKeyListener(this);
+            thread.start();
+        }
+    }
+
+    public void init() {
+        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+        g = (Graphics2D) image.getGraphics();
+        running = true;
+        gsm = new GameStateManager();
+     }
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -44,5 +60,33 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     @Override
     public void run() {
+        init();
+
+        long start;
+        long elapsed;
+        long wait;
+
+        //game loop
+        while(running) {
+            start = System.nanoTime();
+
+            update();
+            draw();
+            drawToScreen();
+        }
+    }
+
+    private void update() {
+        gsm.update();
+    }
+
+    private void draw() {
+        gsm.draw(g);
+    }
+
+    private void drawToScreen() {
+        Graphics g2 = getGraphics();
+        g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+        g2.dispose();
     }
 }
