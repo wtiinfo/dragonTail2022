@@ -40,9 +40,7 @@ public class TileMap {
     public TileMap(int tileSize) {
         this.tileSize = tileSize;
         numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
-        System.out.println("ALTURA_TELA: " + GamePanel.HEIGHT + " / " + "TILESIZE: " + tileSize + " + 2 = NUMROWSTODRAW: " + numRowsToDraw);
         numColsToDraw = GamePanel.WIDTH / tileSize + 2;
-        System.out.println("LARGURA_TELA: " + GamePanel.WIDTH + " / " + "TILESIZE: " + tileSize + " + 2 = NUMROWSTODRAW: " + numColsToDraw);
         tween = .07; // transição de tela. ou movimento de interpolação
     }
 
@@ -51,7 +49,6 @@ public class TileMap {
         try {
             tileset = ImageIO.read(getClass().getResourceAsStream(path));
             numTilesAcross = tileset.getWidth() / tileSize; // largura total do mapa tile dividido pelo tamanho de um tile 30px
-            System.out.println("Total de tiles lado a lado por linha: " + numTilesAcross);
             tiles = new Tile[2][numTilesAcross];
 
             BufferedImage subImage;//cada tile da imagem completa dos tiles
@@ -115,7 +112,6 @@ public class TileMap {
         int matrix = map[row][col];
         int r = matrix / numTilesAcross;
         int c = matrix % numTilesAcross;
-        System.out.println("Tipo do tile: " + tiles[r][c].getType());
         return tiles[r][c].getType();
     }
 
