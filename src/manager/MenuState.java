@@ -57,6 +57,7 @@ public class MenuState extends GameState{
     private void select() {
         if(currentChoice == 0) {
             // Iniciar game
+            gsm.setState(GameStateManager.LEVEL_1_STATE);
         }
         if(currentChoice == 1) {
             // Menu de ajuda
